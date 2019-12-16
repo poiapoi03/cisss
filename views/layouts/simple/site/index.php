@@ -2,7 +2,7 @@
 
 use yii\helpers\Url;
 
-$this->title = 'App-Template';
+$this->title = 'CIS-URDB v2';
 
 ?>
 

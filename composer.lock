@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ebb4bd758d17ed3f29f357534cc9630f",
+    "content-hash": "0d874592e7e3c3c7c37116d442d72796",
     "packages": [
         {
             "name": "2amigos/yii2-selectize-widget",
@@ -2107,16 +2107,16 @@
         },
         {
             "name": "kartik-v/yii2-widget-select2",
-            "version": "v2.1.6",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-widget-select2.git",
-                "reference": "6a1a5e4bc80fff9c3341e1d9b718051db646031a"
+                "reference": "b8cdb76b8dcc363e1e25b8f04f69aeabe98c6be3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-select2/zipball/6a1a5e4bc80fff9c3341e1d9b718051db646031a",
-                "reference": "6a1a5e4bc80fff9c3341e1d9b718051db646031a",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-select2/zipball/b8cdb76b8dcc363e1e25b8f04f69aeabe98c6be3",
+                "reference": "b8cdb76b8dcc363e1e25b8f04f69aeabe98c6be3",
                 "shasum": ""
             },
             "require": {
@@ -2157,7 +2157,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2019-11-01T20:09:46+00:00"
+            "time": "2019-11-15T16:16:16+00:00"
         },
         {
             "name": "kartik-v/yii2-widget-sidenav",
@@ -6560,7 +6560,8 @@
         "kartik-v/yii2-date-range": 20,
         "kartik-v/yii2-dialog": 20,
         "kartik-v/yii2-number": 20,
-        "kartik-v/yii2-tabs-x": 20
+        "kartik-v/yii2-tabs-x": 20,
+        "kartik-v/yii2-widget-select2": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

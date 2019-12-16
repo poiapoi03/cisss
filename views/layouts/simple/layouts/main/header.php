@@ -12,7 +12,7 @@ use yii\helpers\Url;
     <!-- mini logo for sidebar mini 50x50 pixels -->
     <span class="logo-mini">SEC</span>
     <!-- logo for regular state and mobile devices -->
-    <span class="logo-lg">APP TEMPLATE</span>
+    <span class="logo-lg">CIS-URDB v2</span>
   </a>
 
   <!-- Header Navbar -->

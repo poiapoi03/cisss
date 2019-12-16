@@ -41,12 +41,30 @@ class Company extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['fld_sec_reg_no', 'fld_sec_reg_name', 'fld_orig_sec_reg_name', 'fld_primary_license', 'fld_secondary_license', 'fld_office_code_fk', 'fld_emp_id', 'fld_entity_code_fk'], 'required'],
-            [['fld_secondary_license', 'fld_office_code_fk', 'fld_emp_id'], 'string'],
+            [['fld_sec_reg_no', 'fld_sec_reg_name',  'fld_primary_license', 'fld_entity_code_fk'], 'required'],
+            [['fld_office_code_fk', 'fld_emp_id'], 'string'],
             [['fld_sec_reg_no', 'fld_sec_reg_name', 'fld_orig_sec_reg_name'], 'string', 'max' => 250],
+            [['fld_secondary_license'], 'safe'],
             [['fld_primary_license'], 'string', 'max' => 5],
             [['fld_entity_code_fk'], 'string', 'max' => 50],
         ];
+    }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+                $data = '';
+                foreach($this->fld_secondary_license as $row)
+                {
+                    $data .= '|'.sprintf('%04d',$row);
+                }
+                $data .= '|';
+                $this->fld_secondary_license = $data;
+
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -58,13 +76,14 @@ class Company extends \yii\db\ActiveRecord
             'fld_id' => 'Fld ID',
             'fld_sec_reg_no' => 'SEC Reg. No.',
             'fld_sec_reg_name' => 'Company Name',
-            'fld_orig_sec_reg_name' => 'Sec Reg Name',
+            'fld_orig_sec_reg_name' => 'Former Name',
             'fld_primary_license' => 'Primary License',
             'fld_secondary_license' => 'Secondary License',
-            'fld_office_code_fk' => 'Office Code Fk',
+            'fld_office_code_fk' => 'Office Code',
             'fld_emp_id' => 'Emp ID',
-            'fld_entity_code_fk' => 'Entity Code Fk',
+            'fld_entity_code_fk' => 'STATUS',
             'secLic' => 'Secondary License',
+            'secondaryLic' => 'Secondary License',
         ];
     }
 
@@ -80,6 +99,49 @@ class Company extends \yii\db\ActiveRecord
         
 
         return strtoupper($result->fld_entity_type);
+    }
+    
+    public function getPrimaryLicList()
+    {
+        return [
+            '20101'=>"Stock Corporation",
+            '20201'=>"Non-Stock Corporation",
+            '20102'=>"Foreign Stock Corporation",
+            '20202'=>"Foreign Non-stock Corporation",
+            '10101'=>"General Partnership",
+            '10102'=>"Limited Partnership",
+            '10103'=>"Professional Partnership",
+            '10104'=>"Foreign Partnership"
+        ];
+    }
+
+    public function getEntityStatus()
+    {
+        return [
+           'REGISTERED'=>'REGISTERED',
+           'REVOKED'=>'REVOKED',
+           'SUSPENDED'=>'SUSPENDED',
+           'DISSOLVED'=>'DISSOLVED',
+           'CANCELLED'=>'CANCELLED'
+        ];
+    }
+
+    public function getSecondaryLic()
+    {
+        $data = '';
+        $sec = trim($this->fld_secondary_license);
+        $sec = explode('|', $sec);
+
+        foreach($sec as $row)
+        {
+            $lic = Tbl2ndLicenseLib::findOne(['fld_ent_id'=>$row]);
+            if($lic != null)
+            {
+                $data .= '>'.$lic->fld_entity_type .'<br>';
+            }
+        }
+
+        return $data;
     }
 
     public function getPrimaryLic($input)
