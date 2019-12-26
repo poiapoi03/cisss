@@ -19,6 +19,8 @@ use Yii;
  */
 class Company extends \yii\db\ActiveRecord
 {
+
+    public $secLic;
     /**
      * {@inheritdoc}
      */
@@ -44,7 +46,7 @@ class Company extends \yii\db\ActiveRecord
             [['fld_sec_reg_no', 'fld_sec_reg_name',  'fld_primary_license', 'fld_entity_code_fk'], 'required'],
             [['fld_office_code_fk', 'fld_emp_id'], 'string'],
             [['fld_sec_reg_no', 'fld_sec_reg_name', 'fld_orig_sec_reg_name'], 'string', 'max' => 250],
-            [['fld_secondary_license'], 'safe'],
+            [['fld_secondary_license', 'secLic'], 'safe'],
             [['fld_primary_license'], 'string', 'max' => 5],
             [['fld_entity_code_fk'], 'string', 'max' => 50],
         ];
@@ -54,13 +56,14 @@ class Company extends \yii\db\ActiveRecord
     {
         if (parent::beforeSave($insert)) {
                 $data = '';
-                foreach($this->fld_secondary_license as $row)
-                {
-                    $data .= '|'.sprintf('%04d',$row);
+                if($this->secLic != ""){
+                    foreach($this->secLic as $row)
+                    {
+                        $data .= '|'.sprintf('%04d',$row);
+                    }
+                    $data .= '|';
+                    $this->fld_secondary_license = $data;
                 }
-                $data .= '|';
-                $this->fld_secondary_license = $data;
-
             return true;
         } else {
             return false;
@@ -139,6 +142,40 @@ class Company extends \yii\db\ActiveRecord
             {
                 $data .= '>'.$lic->fld_entity_type .'<br>';
             }
+        }
+
+        return $data;
+    }
+
+    public function getPrimaryCode($input)
+    {
+        $data = '';
+        switch ($input)
+        {
+            case 'Foreign Non-stock': $data = '20202';
+                break;
+            case 'Foreign Non-Stock Corporation': $data = '20202';
+                break;
+            case 'Foreign Partnership': $data = '10104';
+                break;
+            case 'Foreign Stock': $data = '20102';
+                break;
+            case 'Foreign Stock Corporation': $data = '20102';
+                break;
+            case 'General Partnership': $data = '10101';
+                break;
+            case 'Limited Partnership': $data = '10102';
+                break;
+            case 'Non-stock Corporation': $data = '20201';
+                break;
+            case 'Non-Stock Corporation': $data = '20201';
+                break;
+            case 'Professional Partnership': $data = '10103';
+                break;
+            case 'Stock Corporation': $data = '20101';
+                break;
+
+            default: $data='for checking';
         }
 
         return $data;

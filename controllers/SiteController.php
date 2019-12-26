@@ -9,6 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\Company;
 use Box\Spout\Reader\Common\Creator\ReaderEntityFactory;
 
 class SiteController extends Controller
@@ -55,6 +56,176 @@ class SiteController extends Controller
         ];
     }
 
+    //step 4
+    public function actionUpdateSecondaryLic()
+    {
+        ini_set('memory_limit', '-1');
+        set_time_limit(0);
+        ini_set('max_execution_time',3000);
+
+        $filePath = Yii::getAlias('@app/web/CRMD_VALIDATED.xlsx');
+        $reader = ReaderEntityFactory::createReaderFromFile($filePath);
+
+        $reader->open($filePath);
+        $x = 0;
+        echo 'start<br>';
+        foreach ($reader->getSheetIterator() as $sheet) {
+            if($sheet->getName() == 'FOUNDATION' || $sheet->getName() == 'MICROFINANCE' || $sheet->getName() == 'LENDING' || $sheet->getName() == 'FINANCING'){
+                echo $sheet->getName() . '<br>';
+                foreach ($sheet->getRowIterator() as $row) {
+                    if($x > 0){
+                        $cells = $row->getCells();
+                        if($cells[1] == "")
+                        {
+                            break;
+                        }
+                        $secLic = '';
+                        switch ($sheet->getName()) {
+                            case 'FOUNDATION':
+                                $secLic = '0029';
+                                break;
+                            case 'MICROFINANCE':
+                                $secLic = '0030';
+                                break;
+                            case 'LENDING':
+                                $secLic = '0002';
+                                break;
+                            case 'FINANCING':
+                                $secLic = '0001';
+                                break;
+                            
+                            default:
+                                # code...
+                                break;
+                        }
+
+                        if($cells[12] == "YES"){
+                            $model = Company::findOne(['fld_sec_reg_no'=>$cells[1]]);
+                            if($model != null)
+                            {
+                                if($model->fld_secondary_license != "")
+                                {
+                                    if (strpos($model->fld_secondary_license, $secLic) !== false) {
+                                    // echo 'true';
+                                    }else{
+                                        $model->fld_secondary_license .=  $secLic .'|';  
+                                    }
+                                }else{
+                                    $model->fld_secondary_license =  '|'.$secLic .'|'; 
+                                }
+                                
+                                $model->save(false);
+                            }
+                        }
+                       
+                        
+                        //exit;
+
+
+                    }
+                    $x++;
+                }
+            }
+          
+        }
+        echo 'end';
+        $reader->close();
+
+    }
+
+    //step 3
+    public function actionUpdateCompanyTable()
+    {
+
+        ini_set('memory_limit', '-1');
+        set_time_limit(0);
+        ini_set('max_execution_time',3000);
+
+        $filePath = Yii::getAlias('@app/web/CRMD_VALIDATED.xlsx');
+        $reader = ReaderEntityFactory::createReaderFromFile($filePath);
+
+        $reader->open($filePath);
+        $x = 0;
+        echo 'start<br>';
+        foreach ($reader->getSheetIterator() as $sheet) {
+            if($sheet->getName() == 'FOR INSERT'){
+                foreach ($sheet->getRowIterator() as $row) {
+                    if($x > 0){
+                        $cells = $row->getCells();
+                        if($cells[0] == "")
+                        {
+                            break;
+                        }
+                        $model = new \app\models\Company;
+                        $model->fld_sec_reg_no = $cells[0];
+                        $model->fld_sec_reg_name = $cells[1];
+                        $model->fld_orig_sec_reg_name = $cells[2];
+                        $model->fld_primary_license = \app\models\Company::getPrimaryCode($cells[3]);
+                        $model->fld_secondary_license = '';
+                        $model->fld_office_code_fk = ''; 
+                        $model->fld_emp_id = '';
+                        $model->fld_entity_code_fk = $cells[4];
+                        $model->save(false);
+
+                    }
+                    $x++;
+                }
+            }
+          
+        }
+        echo 'end';
+        $reader->close();
+
+
+    }
+
+    //step 2
+    public function actionImport2()
+    {
+        ini_set('memory_limit', '-1');
+        set_time_limit(0);
+        ini_set('max_execution_time',3000);
+
+        $filePath = Yii::getAlias('@app/web/CRMD_VALIDATED.xlsx');
+        $reader = ReaderEntityFactory::createReaderFromFile($filePath);
+
+        $fileData = Yii::getAlias('@app/web/2015-2019_for_insert_2ndrun.txt');
+
+        $reader->open($filePath);
+        $x = 0;
+        echo 'start';
+        foreach ($reader->getSheetIterator() as $sheet) {
+            if($sheet->getName() == 'FOR INSERT'){
+                foreach ($sheet->getRowIterator() as $row) {
+                    if($x > 0){
+                        // do stuff with the row
+                        $cells = $row->getCells();
+                        echo $cells[1] . '<br>';
+                        $chk = \app\models\Company::findOne(['fld_sec_reg_name'=>$cells[1]]);
+                        // $chk = Yii::$app->db->createCommand('SELECT fld_sec_reg_no,fld_sec_reg_name FROM cis_urdb.tbl_company WHERE fld_sec_reg_no = "'.$cells[0].'"')->query();
+                        
+                        if($chk)
+                        {
+                            //echo 'NOT FOUND|'.$cells[0].'|'.$cells[1] .'<br>';
+                            //secregno|name|formername|businesstype|status|
+                            // $formerName = isset($cells[7]) ? $cells[7]:'';
+                            $result = $cells[0].'|'.$cells[1].'|'.$chk->fld_sec_reg_no.'|'.$chk->fld_sec_reg_name."\n";
+                            file_put_contents($fileData, $result,FILE_APPEND);
+                        }
+                        // else{
+                        //     echo 'FOUND'.$cells[0].'|'.$cells[1] .'<br>';
+                        // }
+                    }
+                    $x++;
+                }
+            }
+          
+        }
+        echo 'end';
+        $reader->close();
+    }
+
+    //step 1
     public function actionImport()
     {
         ini_set('memory_limit', '-1');
@@ -68,7 +239,7 @@ class SiteController extends Controller
 
         $reader->open($filePath);
         $x = 0;
-        echo 'start';
+        echo 'start<br>';
         foreach ($reader->getSheetIterator() as $sheet) {
             if($sheet->getName() == 'ALL'){
                 foreach ($sheet->getRowIterator() as $row) {

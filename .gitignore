@@ -32,3 +32,12 @@ tests/_support/_generated
 
 #vagrant folder
 /.vagrant
+web/CRMD_VALIDATED_bak.xlsx
+web/CRMD_VALIDATED.xlsx
+web/2015-2019_for_insert.txt
+web/17D01040
+web/~$CRMD_VALIDATED.xlsx
+config/web.php
+web/2015-2019_for_insert_2ndrun.txt
+web/2015-2019_for_insert.txt
+web/CRMD_VALIDATED.xlsx

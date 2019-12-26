@@ -29,7 +29,11 @@ use app\models\Tbl2ndLicenseLib;
     $def = explode('|', $model->fld_secondary_license);
     //echo implode("|", $def);
     //print_r($def);
-    echo $form->field($model, 'fld_secondary_license')->widget(Select2::classname(), [
+
+    
+    $model->secLic = $model->fld_secondary_license;
+    
+    echo $form->field($model, 'secLic')->widget(Select2::classname(), [
         'data' => $data,
         
         'options' => ['placeholder' => 'Select Secondary License', 'multiple' => true,
