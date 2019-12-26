@@ -32,3 +32,6 @@ tests/_support/_generated
 
 #vagrant folder
 /.vagrant
+config/db_admindb.php
+config/db_cisurdb.php
+config/db.php
