@@ -88,6 +88,8 @@ class TblNegativeList extends \yii\db\ActiveRecord
                 }else{
                     $this->fld_remarks .= '<b>'.date('d F Y').': </b>'.$this->addRemarks.'<br>';
                 }
+                $this->fld_remarks .= '<b>Cleared by: </b>' . Yii::$app->user->identity->name;
+
             }else{
                 if($this->addRemarks != "")
                 {

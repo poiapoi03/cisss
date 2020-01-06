@@ -2,6 +2,7 @@
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use kartik\date\DatePicker;
 return [
     // [
     //     'class' => 'kartik\grid\CheckboxColumn',
@@ -42,11 +43,11 @@ return [
         'value'=>function($model){ return $model->fld_cleared == 0 ? 'NO':'YES'; },
         'filter'=>['0'=>'NO','1'=>'YES']
     ],
-    // [
-    //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'fld_neg_date',
-    //     'format'=>['date','php: F d, Y']
-    // ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'fld_neg_date',
+        'format'=>['date','php: F d, Y'],
+    ],
     // [
     //     'class'=>'\kartik\grid\DataColumn',
     //     'attribute'=>'fld_date_cleared',
@@ -63,7 +64,10 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'fld_source_specialist',
-        'value'=>function($model){ return $model->specialist;}
+        'value'=>function($model){ return $model->specialist;},
+         'filter'=>ArrayHelper::map(\app\models\User::find()
+        ->where(['like','office_id', '010501%', false])
+        ->asArray()->all(), 'empid', 'name'),
     ],
     
     [

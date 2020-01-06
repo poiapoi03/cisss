@@ -105,11 +105,11 @@ class TblNegativeListSearch extends TblNegativeList
             'asc' => ['tbl_company.fld_sec_reg_name' => SORT_ASC],
             'desc' => ['tbl_company.fld_sec_reg_name' => SORT_DESC],
         ];
-
+        // echo $this->fld_neg_date;exit;
         $query->andFilterWhere([
             'fld_neg_id' => $this->fld_neg_id,
             'fld_cleared' => $this->fld_cleared,
-            'fld_neg_date' => $this->fld_neg_date,
+          //  'fld_neg_date' => $this->fld_neg_date,
             'fld_date_cleared' => $this->fld_date_cleared,
         ]);
 
@@ -133,7 +133,10 @@ class TblNegativeListSearch extends TblNegativeList
             ->andFilterWhere(['like', 'fld_remarks', $this->fld_remarks])
             ->andFilterWhere(['like', 'fld_source_office', $this->fld_source_office])
             ->andFilterWhere(['like', 'fld_source_specialist', $this->fld_source_specialist])
+            ->andFilterWhere(['like', 'fld_neg_date', $this->fld_neg_date])
             ->andFilterWhere(['like', 'tbl_company.fld_sec_reg_name', $this->companyDetails]);
+
+           // echo $this->fld_source_specialist;exit;
 
         return $dataProvider;
     }

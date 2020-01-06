@@ -59,6 +59,7 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'fld_source_specialist',
         'value'=>function($model){ return $model->specialist;}
+        
     ],
     
     [
@@ -71,7 +72,7 @@ return [
         },
         'buttons' => [
             'update'=>function($url, $model, $key) {   
-                if($model->fld_source_specialist == '|'.Yii::$app->user->identity->empid.'|'){  // render your custom button
+                if($model->fld_source_specialist == '|'.Yii::$app->user->identity->empid.'|' && $model->fld_cleared == 0){  // render your custom button
                     return Html::a('<i class="fa fa-pencil"></i>', ['negative-list/update','id'=>$key], ['class' => 'btn btn-success btn-md','role'=>'modal-remote']);
                 }
             }

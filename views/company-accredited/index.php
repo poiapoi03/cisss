@@ -6,39 +6,34 @@ use kartik\grid\GridView;
 use johnitvn\ajaxcrud\CrudAsset; 
 use johnitvn\ajaxcrud\BulkButtonWidget;
 
-use yii\widgets\ActiveForm;
-
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\TblNegativeListSearch */
+/* @var $searchModel app\models\CompanySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-if($this->title ==""){
-    $this->title = 'Infraction Records';
-    $this->params['breadcrumbs'][] = $this->title;
-}
+$this->title = 'Microfinance Company List';
+$this->params['breadcrumbs'][] = $this->title;
 
 CrudAsset::register($this);
 
-// echo Yii::$app->user->can('Specialist');
-// echo Yii::$app->user->can('Supervisor');
 ?>
 
 <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
 
-<div class="tbl-negative-list-index">
+<div class="company-index">
     <div id="ajaxCrudDatatable">
         <?=GridView::widget([
             'id'=>'crud-datatable',
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
             'pjax'=>true,
-            'columns' => require(__DIR__.'/_columns_record_list.php'),
+            'columns' => require(__DIR__.'/_columns.php'),
             'toolbar'=> [
-                ['content'=> '',
-                    // Html::a('<i class="glyphicon glyphicon-plus"></i> Add Infraction', ['/negative-list/create','cid'=>$model->fld_sec_reg_no],
-                    // ['role'=>'modal-remote','title'=> 'Create new Tbl Negative Lists','class'=>'btn btn-warning'])
-                    //.
-                    
+                ['content'=>'',
+                    // Html::a('<i class="glyphicon glyphicon-plus"></i> ENCODE COMPANY', ['/company/create'],
+                    // ['role'=>'modal-remote','title'=> 'Create new Companies','class'=>'btn btn-default'])
+                    // .
+                    // Html::a('<i class="glyphicon glyphicon-repeat"></i>', [''],
+                    // ['data-pjax'=>1, 'class'=>'btn btn-default', 'title'=>'Reset Grid']).
                     // '{toggleData}'.
                     // '{export}'
                 ],
@@ -48,9 +43,8 @@ CrudAsset::register($this);
             'responsive' => true,          
             'panel' => [
                 'type' => 'primary', 
-                'heading' => '<i class="glyphicon glyphicon-list"></i> Infraction List',
-                // 'before'=>Html::a('<i class="fa fa-print"></i> Print Corporate Status Summary', ['/negative-list/print-summary','id'=>$model->fld_sec_reg_no],
-                // ['data-pjax'=>0, 'class'=>'btn btn-default ', 'title'=>'Print','target'=>'_blank']),
+                'heading' => '<i class="glyphicon glyphicon-list"></i> Company Index',
+                // 'before'=>'<em>* Resize table columns just like a spreadsheet by dragging the column edges.</em>',
                 // 'after'=>BulkButtonWidget::widget([
                 //             'buttons'=>Html::a('<i class="glyphicon glyphicon-trash"></i>&nbsp; Delete All',
                 //                 ["bulk-delete"] ,
