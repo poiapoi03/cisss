@@ -68,7 +68,7 @@ return [
         'dropdown' => false,
         'vAlign'=>'middle',
         'urlCreator' => function($action, $model, $key, $index) { 
-                return Url::to(['/company-list/update-microfin','id'=>$key]);
+                return Url::to(['/company-accredited/update-microfin','id'=>$key]);
         },
         'header'=>'Update',
         'template'=>'{update}',
