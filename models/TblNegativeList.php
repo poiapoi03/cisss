@@ -59,7 +59,7 @@ class TblNegativeList extends \yii\db\ActiveRecord
     {
         return [
             'fld_neg_id' => 'Fld Neg ID',
-            'fld_sec_reg_no_fk' => 'Fld Sec Reg No Fk',
+            'fld_sec_reg_no_fk' => 'SEC Reg. No.',
             'fld_status_code_fk' => 'Infraction Type',
             'fld_remarks' => 'Remarks',
             'fld_cleared' => 'Cleared',
@@ -128,7 +128,7 @@ class TblNegativeList extends \yii\db\ActiveRecord
         $data = str_replace('|','', $this->fld_source_specialist);
         $office = TblAuthUser::findOne(['fld_empid'=>$data]);
 
-        return $office->fld_name;
+        return $office != null ? $office->fld_name:'';
     }
 
     public function getSpecialistInitital()

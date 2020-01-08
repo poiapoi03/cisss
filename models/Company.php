@@ -44,11 +44,13 @@ class Company extends \yii\db\ActiveRecord
     {
         return [
             [['fld_sec_reg_no', 'fld_sec_reg_name',  'fld_primary_license', 'fld_entity_code_fk'], 'required'],
+            ['fld_sec_reg_no','unique'],
             [['fld_office_code_fk', 'fld_emp_id'], 'string'],
             [['fld_sec_reg_no', 'fld_sec_reg_name', 'fld_orig_sec_reg_name'], 'string', 'max' => 250],
             [['fld_secondary_license', 'secLic'], 'safe'],
             [['fld_primary_license'], 'string', 'max' => 5],
             [['fld_entity_code_fk'], 'string', 'max' => 50],
+            
         ];
     }
 

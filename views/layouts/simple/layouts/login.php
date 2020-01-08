@@ -1,6 +1,7 @@
 <?php
 use backend\assets\AppAsset;
 use yii\helpers\Html;
+use yii\helpers\Url;
 /* @var $this \yii\web\View */
 /* @var $content string */
 // You could register AppAsset depended with AdminlteAsset instead
@@ -20,9 +21,11 @@ yidas\adminlte\plugins\iCheckAsset::register($this);
 </head>
 <body class="hold-transition login-page">
 
-<?php $this->beginBody() ?>
+<?php $this->beginBody() ?>  
 
     <?= $content ?>
+
+    <div class="well" align="center"><a class="btn btn-primary" href="<?= Url::to(['/request/index'])?>">List of Released Certificates of No Derogatory</a></div>
 
 <?php $this->endBody() ?>
 </body>
