@@ -25,9 +25,9 @@ CrudAsset::register($this);
             'pjax'=>true,
             'columns' => require(__DIR__.'/_columns.php'),
             'toolbar'=> [
-                ['content'=>
-                    Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create'],
-                    ['role'=>'modal-remote','title'=> 'Create new Assignments','class'=>'btn btn-default'])
+                ['content'=>'',
+                    // Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create'],
+                    // ['role'=>'modal-remote','title'=> 'Create new Assignments','class'=>'btn btn-default'])
                     
                 ],
             ],          
