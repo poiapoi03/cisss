@@ -45,6 +45,8 @@ class AssignmentSearch extends Assignment
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination'=>false,
+            'sort'=>['defaultOrder'=>['ent_id'=>SORT_ASC,'char_assignment'=>SORT_ASC]]
         ]);
 
         $this->load($params);
