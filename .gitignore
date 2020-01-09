@@ -47,3 +47,6 @@ config/db_admindb.php
 config/db_admindb.php
 config/db_cisurdb.php
 config/db.php
+config/db_admindb.php
+config/db_admindb.php
+config/db.php
