@@ -44,6 +44,16 @@ class CompanyAccreditedController extends \yii\web\Controller
                                 Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
             }else if($model->load($request->post()) && $model->save()){
+
+                if($model->accredited == 0)
+                {
+                    $sLic = $model->fld_secondary_license;
+                    $model->fld_secondary_license = str_replace('0031|','', $sLic);
+                    $model->save(false);
+                }else{
+                    $model->fld_secondary_license .= '0031|';
+                    $model->save(false);
+                }
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'forceClose'=>true,

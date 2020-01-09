@@ -20,7 +20,7 @@ use Yii;
 class Company extends \yii\db\ActiveRecord
 {
 
-    public $secLic;
+    public $secLic, $accredited;
     /**
      * {@inheritdoc}
      */
@@ -47,7 +47,7 @@ class Company extends \yii\db\ActiveRecord
             ['fld_sec_reg_no','unique'],
             [['fld_office_code_fk', 'fld_emp_id'], 'string'],
             [['fld_sec_reg_no', 'fld_sec_reg_name', 'fld_orig_sec_reg_name'], 'string', 'max' => 250],
-            [['fld_secondary_license', 'secLic'], 'safe'],
+            [['fld_secondary_license', 'secLic','accredited'], 'safe'],
             [['fld_primary_license'], 'string', 'max' => 5],
             [['fld_entity_code_fk'], 'string', 'max' => 50],
             
@@ -234,5 +234,67 @@ class Company extends \yii\db\ActiveRecord
         }
 
         return rtrim($result,', ');
+    }
+
+
+    public function setSecondaryLicense($name)
+    {
+        $data = '';
+        $foundation = ['Foundation','Fundacion'];
+        $microfin = ['Microfinance','Microfinancing','Micro finance','Micro finance'];
+        $lending = ['Lending','Credit','Pawnshop'];
+        $financing = ['Finance','Financing','Leasing','Investment'];
+        
+
+        //check if foundation
+        foreach($foundation as $row)
+        {
+            if(preg_match("~\b".strtoupper($row)."\b~",$name))
+            {
+                $data .= $data == '' ? '|0029|': '0029|'; break;
+            }
+            // if(strpos($name,strtoupper($row)) !== false)
+            // {
+            //     $data .= $data == '' ? '|0029|': '0029|'; break;
+            // }
+        }
+        //check if microfin
+        foreach($microfin as $row)
+        {
+            if(preg_match("~\b".strtoupper($row)."\b~",$name))
+            {
+                $data .= $data == '' ? '|0030|': '0030|'; break;
+            }
+            // if(strpos($name, strtoupper($row)) !== false)
+            // {
+            //     $data .= $data == '' ? '|0030|': '0030|'; break;
+            // }
+        }
+        //check if lending
+        foreach($lending as $row)
+        {
+            if(preg_match("~\b".strtoupper($row)."\b~",$name))
+            {
+                $data .= $data == '' ? '|0002|': '0002|'; break;
+            }
+            // if(strpos($name, strtoupper($row)) !== false)
+            // {
+            //     $data .= $data == '' ? '|0002|': '0002|'; break;
+            // }
+        }
+        //check if financing
+        foreach($financing as $row)
+        {
+            if(preg_match("~\b".strtoupper($row)."\b~",$name))
+            {
+                $data .= $data == '' ? '|0001|': '0001|'; break;
+            }
+            // if(strpos($name, strtoupper($row)) !== false)
+            // {
+            //     $data .= $data == '' ? '|0001|': '0001|'; break;
+            // }
+        }
+
+        return $data;
     }
 }
