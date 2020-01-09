@@ -39,6 +39,7 @@ $config = [
             // ...other configs from here: [Configuration Options](installation/configuration-options.md), e.g.
             // 'generatePasswords' => true,
             // 'switchIdentitySessionKey' => 'myown_usuario_admin_user_key',
+            'enableRegistration'=>false
         ]
     ],
     'as access' => [
@@ -49,7 +50,8 @@ $config = [
             'user/*',
             'debug/*',
            'profile/*',
-           'site/*'
+           'site/*',
+           'request/*',
             //'some-controller/some-action',
             // The actions listed here will be allowed to everyone including guests.
             // So, 'admin/*' should not appear here in the production, of course.

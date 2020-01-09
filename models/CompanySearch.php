@@ -96,6 +96,7 @@ class CompanySearch extends Company
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => ['defaultOrder'=>['fld_id'=>SORT_DESC]]
         ]);
 
         $this->load($params);

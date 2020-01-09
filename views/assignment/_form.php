@@ -23,13 +23,13 @@ use yii\helpers\ArrayHelper;
 
 
     <?php 
-    echo $form->field($model, 'ent_id')->dropDownList(['0001'=>'Financing Company','0002'=>'Lending Company','0029'=>'Foundation','0031'=>'CGFD Accredited Microfin NGOs']);
     // echo $form->field($model, 'ent_id')->dropDownList(
     //     ArrayHelper::map(\app\models\Tbl2ndLicenseLib::find()
     //     ->where(['fld_office_code'=>'|0105010000|'])
     //     ->asArray()->all(), 'fld_ent_id', 'fld_entity_type'),
     //     ['prompt'=>'Select User']
     //     );
+    echo $form->field($model, 'ent_id')->dropDownList(['0001'=>'Financing Company','0002'=>'Lending Company','0029'=>'Foundation','0031'=>'CGFD Accredited Microfin NGOs']);
     ?>
 
     <?= $form->field($model, 'char_assignment')->textInput(['maxlength' => true]) ?>

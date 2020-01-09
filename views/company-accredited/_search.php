@@ -12,7 +12,7 @@ use kartik\date\DatePicker;
 <div class="tbl-negative-list-search col-md-6">
 <label class="label-primary">Filter:</label>
     <?php $form = ActiveForm::begin([
-        'action' => ['accredited-microfins'],
+        'action' => ['index'],
         'method' => 'get',
     ]); ?>
 

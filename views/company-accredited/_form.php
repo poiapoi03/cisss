@@ -21,11 +21,18 @@ use app\models\Tbl2ndLicenseLib;
 
     <?= $form->field($model, 'fld_primary_license')->dropDownList($model->getPrimaryLicList(),['disabled'=>true]) ?>
 
-    <!-- <?= $form->field($model, 'fld_secondary_license')->textarea(['rows' => 6]) ?> -->
+    <!-- <?= $form->field($model, 'fld_secondary_license')->textarea(['rows' => 6, 'disabled'=>true]) ?> -->
 
     <?php 
     $data = ArrayHelper::map(Tbl2ndLicenseLib::find()->all(), 'fld_ent_id', 'fld_entity_type');
     $model->fld_secondary_license = trim($model->fld_secondary_license,'|');
+
+    if(strpos($model->fld_secondary_license, '0031')){
+        $model->accredited = 1;
+    }else{
+        $model->accredited = 0;
+    }
+
     $def = explode('|', $model->fld_secondary_license);
     //echo implode("|", $def);
     //print_r($def);
@@ -36,7 +43,7 @@ use app\models\Tbl2ndLicenseLib;
     echo $form->field($model, 'secLic')->widget(Select2::classname(), [
         'data' => $data,
         
-        'options' => ['placeholder' => 'Select Secondary License', 'multiple' => true,
+        'options' => ['placeholder' => 'Select Secondary License', 'multiple' => true, 'disabled'=>true,
             'value' => $def, 
         ],
         'pluginOptions' => [
@@ -45,6 +52,7 @@ use app\models\Tbl2ndLicenseLib;
             'tags' => true,
         ],
     ]);
+
 
     // echo '<label class="control-label">Secondary License</label>';
     //     echo Select2::widget([
@@ -63,6 +71,7 @@ use app\models\Tbl2ndLicenseLib;
     //     ]);
      
     ?>
+    <?= $form->field($model, 'accredited')->checkBox(['label'=>'CGFD Accredited Microfin NGO']) ?>
 
     <!-- <?= $form->field($model, 'fld_office_code_fk')->textarea(['rows' => 6]) ?>
 
