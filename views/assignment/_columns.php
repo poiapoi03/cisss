@@ -32,6 +32,7 @@ return [
         // ->asArray()->all(), 'fld_ent_id', 'fld_entity_type'),
         'filter'=>['0001'=>'Financing Company','0002'=>'Lending Company','0029'=>'Foundation','0031'=>'CGFD Accredited Microfin NGOs']
         // 'header'=>'Secondary License'
+        // 'filter'=>['0001'=>'Financing Company','0002'=>'Lending Company','0029'=>'Foundation','0031'=>'CGFD Accredited Microfin NGOs'],
     ],
     [
         'class'=>'\kartik\grid\DataColumn',

@@ -55,7 +55,7 @@ class CompanyAccreditedController extends \yii\web\Controller
                         $model->fld_secondary_license .= '0031|';
                         $model->save(false);
                     }
-                   
+                    
                 }
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
