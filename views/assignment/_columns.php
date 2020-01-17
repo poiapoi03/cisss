@@ -40,7 +40,7 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'type',
-        'value'=>function($model){ return $model->type == 1 ? 'Single Character':'Blanket'; }
+        'value'=>function($model){ return $model->type == 1 ? 'Single Character':'Range'; }
     ],
     [
         'class' => 'kartik\grid\ActionColumn',

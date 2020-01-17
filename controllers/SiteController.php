@@ -56,6 +56,47 @@ class SiteController extends Controller
         ];
     }
 
+    public function actionUpdateFoundation()
+    {
+        ini_set('memory_limit', '-1');
+        set_time_limit(0);
+        ini_set('max_execution_time',3000);
+
+        $filePath = Yii::getAlias('@app/web/foundations.xlsx');
+        $reader = ReaderEntityFactory::createReaderFromFile($filePath);
+
+        $reader->open($filePath);
+        $x = 0;
+        echo 'start<br>';
+        foreach ($reader->getSheetIterator() as $sheet) {
+                foreach ($sheet->getRowIterator() as $row) {
+                    if($x > 0){
+                        $cells = $row->getCells();
+                        if($cells[1] == "")
+                        {
+                            break;
+                        }
+                        $model = \app\models\Company::findOne(['fld_sec_reg_no'=>$cells[0]]);
+                       
+                        if($model != null)
+                        {
+                           // if(!strpos($model->fld_secondary_license, '0029'))    
+                            //echo $model->fld_sec_reg_no . '[' . $model->fld_sec_reg_name .'[' .$model->fld_secondary_license .'<br>';
+
+                        }else{
+                            echo $cells[0] . '|' . $cells[1] .'<br>';
+                        }
+                    }
+                    $x++;
+                
+            }
+          
+        }
+        echo 'end';
+        $reader->close();
+        exit;
+    }
+
     //step 4
     public function actionUpdateSecondaryLic()
     {

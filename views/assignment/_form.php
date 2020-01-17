@@ -34,7 +34,7 @@ use yii\helpers\ArrayHelper;
 
     <?= $form->field($model, 'char_assignment')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'type')->dropDownList(['1'=>'Single Character','2'=>'Blanket']) ?>
+    <?= $form->field($model, 'type')->dropDownList(['1'=>'Single Character','2'=>'Range']) ?>
 
   
 	<?php if (!Yii::$app->request->isAjax){ ?>
