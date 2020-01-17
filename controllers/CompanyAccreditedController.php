@@ -51,8 +51,11 @@ class CompanyAccreditedController extends \yii\web\Controller
                     $model->fld_secondary_license = str_replace('0031|','', $sLic);
                     $model->save(false);
                 }else{
-                    $model->fld_secondary_license .= '0031|';
-                    $model->save(false);
+                    if(!strpos($model->fld_secondary_license,'0031')){
+                        $model->fld_secondary_license .= '0031|';
+                        $model->save(false);
+                    }
+                    
                 }
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
