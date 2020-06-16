@@ -48,6 +48,7 @@ class UploadForm extends Model
                 foreach ($sheet->getRowIterator() as $row) {
                     if($x > 0){
                         $cells = $row->getCells();
+                        #echo $cells[1].'<br>';
                         if($cells[1] == "")
                         {
                             break;
