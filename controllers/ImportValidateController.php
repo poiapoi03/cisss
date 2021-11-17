@@ -49,6 +49,9 @@ class ImportValidateController extends Controller
 
     public function actionFinalImport()
     {
+        ini_set('memory_limit', '-1');
+        set_time_limit(0);
+        ini_set('max_execution_time',3000);
         $data = \app\models\TempImportCompany::findAll(['with_duplicate'=>0]);
 
         foreach($data as $row)
