@@ -80,11 +80,29 @@ class SiteController extends Controller
                        
                         if($model != null)
                         {
-                           // if(!strpos($model->fld_secondary_license, '0029'))    
-                            //echo $model->fld_sec_reg_no . '[' . $model->fld_sec_reg_name .'[' .$model->fld_secondary_license .'<br>';
+                            // if(!strpos($model->fld_secondary_license, '0029')){
+                            //     echo $model->fld_sec_reg_no . '[' . $model->fld_sec_reg_name .'[' .$model->fld_secondary_license .'<br>';
+                            //     if($model->fld_secondary_license == "")
+                            //     {
+                            //         $model->fld_secondary_license = '|0029|';
+                            //     }else{
+                            //         $model->fld_secondary_license .= '0029|';
+                            //     }
+                            //    # $model->save(false);
+                            // }
 
                         }else{
                             echo $cells[0] . '|' . $cells[1] .'<br>';
+                            $model = new \app\models\Company;
+                            $model->fld_sec_reg_no = $cells[0];
+                            $model->fld_sec_reg_name = $cells[1];
+                            $model->fld_orig_sec_reg_name = '';
+                            $model->fld_primary_license = '';
+                            $model->fld_secondary_license = '|0029|';
+                            $model->fld_office_code_fk = '';
+                            $model->fld_emp_id = '';
+                            $model->fld_entity_code_fk = 'REGISTERED';
+                            $model->save(false);
                         }
                     }
                     $x++;
