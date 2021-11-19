@@ -91,7 +91,11 @@ class ApiController extends ActiveController
                 $model = new \app\models\Company;
                 $model->fld_sec_reg_no = $data['sec_reg_no'];
                 $model->fld_sec_reg_name = $data['company_name'];//fullname
+                $model->fld_orig_sec_reg_name = '';
                 $model->fld_primary_license = \app\models\Company::getPrimaryCode($data['type']);
+                $model->fld_secondary_license  = '';
+                $model->fld_office_code_fk = '';
+                $model->fld_emp_id = '';
                 $model->fld_entity_code_fk = 'REGISTERED';
                 $model->save(false);
 
