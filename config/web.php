@@ -139,7 +139,7 @@ $config = [
 					'class' => 'yii\rest\UrlRule', 
 					'controller' => 'api',
 					'extraPatterns'=>[
-                        'POST insert-company' => 'insert_company',
+                        'POST insert-company' => 'insert-company',
                         ]
 				],
             ],

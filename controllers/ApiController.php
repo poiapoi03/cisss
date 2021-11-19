@@ -31,7 +31,7 @@ class ApiController extends ActiveController
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'handler' => ['post'],
+                    'insert-company' => ['post'],
                 ],
             ],
             'authenticator' => [
