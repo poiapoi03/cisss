@@ -3,7 +3,7 @@
     <tr>
         <td align="right" width="20%">
             
-            <img src="<?= Yii::getAlias('@app/web')?>/images/logo1.png" alt="Image" height="50px">
+            <img src="<?= Yii::getAlias('@app/web')?>/images/logo1.png" alt="Image" height="130px">
             
         </td>
         <td align ="center">
