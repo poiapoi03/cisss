@@ -118,7 +118,7 @@ class ApiController extends ActiveController
                 $model->fld_remarks = $data['remarks'] .'<br>';
                 $model->fld_cleared = 0;
                 $model->fld_neg_date  = date('Y-m-d');
-                $model->fld_date_cleared = date('Y-m-d H:i:s');
+                $model->fld_date_cleared = date('Y-m-d');
                 $model->fld_source_office = $office_id;
                 $model->fld_source_specialist = '|'.$empid.'|';
                 $model->save(false);
