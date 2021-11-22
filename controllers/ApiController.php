@@ -32,6 +32,7 @@ class ApiController extends ActiveController
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'insert-company' => ['post'],
+                    'add-infraction' => ['post'],
                 ],
             ],
             'authenticator' => [
@@ -52,6 +53,79 @@ class ApiController extends ActiveController
        // $actions['index']['prepareDataProvider'] = [$this, 'prepareDataProvider'];
 
         return $actions;
+    }
+
+    public function actionAddInfraction()
+    {
+        try{
+            if(!$this->checkRole())
+            {
+                $this->returnError('INVALID USER'); 
+            }
+        
+            $request = Yii::$app->request;
+            $post = $request->bodyParams;
+
+            $data = $post['sec_reg_no'];
+            
+            if($data=="")
+            {
+                $this->returnError('INVALID DATA'); 
+            }else{
+                ini_set('memory_limit', '256M');
+                return $this->addInfraction($post);
+            }
+
+        }catch (ErrorException $e){
+            $this->returnError($e->getMessage()); 
+        }
+    }
+
+    private function addInfraction($data)
+    {
+        try{
+                $fld_status_code_fk = 1;
+                switch($data['post_review_status_id'])
+                {
+                    case 7: //For Compliance - Amendment
+                            $fld_status_code_fk = 131;
+                            break;
+                    case 8: //For Compliance - Petition
+                            $fld_status_code_fk = 132;
+                            break;
+                    case 10: //For Compliance - Other
+                            $fld_status_code_fk = 133;
+                            break;
+                }
+                $empid = 900001; 
+                switch($data['office'])
+                {
+                    case 1: $empid = "001"; $office_id = "0103010200"; break; //main office - crmd - cprd
+                    case 2: $empid = "002"; $office_id = "0103030000"; break; //eo baguio    
+                    case 3: $empid = "005"; $office_id = "0103040000"; break; //eo iloilo    
+                    case 4: $empid = "008"; $office_id = "0103050000"; break; //eo CDO    
+                    case 5: $empid = "007"; $office_id = "0103060000"; break; //eo cebu    
+                    case 6: $empid = "009"; $office_id = "0103070000"; break; //eo davao    
+                    case 7: $empid = "010"; $office_id = "0103080000"; break; //eo zamboanga    
+                    case 8: $empid = "004"; $office_id = "0103090000"; break; //eo legazpi 
+                    case 9: $empid = "003"; $office_id = "0103100000"; break; //eo tarlac    
+                    case 10: $empid = "006"; $office_id = "0103110000"; break; //eo bacolod    
+                }
+                
+                $model = new \app\models\TblNegativeList;
+                $model->fld_sec_reg_no_fk = $data['sec_reg_no'];
+                $model->fld_status_code_fk = $fld_status_code_fk;
+                $model->fld_remarks = '<b>'.date('d F Y').': </b>'. $data['remarks'] .'<br>';;
+                $model->fld_cleared = 0;
+                $model->fld_neg_date  = date('Y-m-d');
+                $model->fld_date_cleared = '';
+                $model->fld_source_office = '|'.$office_id.'|';
+                $model->fld_source_specialist = '|'.$empid.'|';
+                $model->save(false);
+
+        }catch (ErrorException $e){
+            $this->returnError($e->getMessage()); 
+        }
     }
 
 
