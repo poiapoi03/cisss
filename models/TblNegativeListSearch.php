@@ -140,4 +140,41 @@ class TblNegativeListSearch extends TblNegativeList
 
         return $dataProvider;
     }
+
+    public function searchByOffice($params, $regno = null)
+    {
+        $query = TblNegativeList::find();
+        $query->joinWith(['companyDetails']);
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'sort'=>['defaultOrder'=>['fld_neg_date'=>SORT_DESC]]
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        $query->andFilterWhere([
+            'fld_neg_id' => $this->fld_neg_id,
+            'fld_cleared' => $this->fld_cleared,
+            'fld_neg_date' => $this->fld_neg_date,
+            'fld_date_cleared' => $this->fld_date_cleared,
+            // 'fld_source_office'=>Yii::$app->user->identity->office_id,
+        ]);
+
+
+        $query->andFilterWhere(['like', 'fld_sec_reg_no_fk', $regno])
+            ->andFilterWhere(['like', 'fld_status_code_fk', $this->fld_status_code_fk])
+            ->andFilterWhere(['like', 'fld_remarks', $this->fld_remarks])
+            // ->andFilterWhere(['like', 'fld_source_office', $this->fld_source_office])
+            ->andFilterWhere(['like', 'fld_source_specialist', Yii::$app->user->identity->empid])
+            ->andFilterWhere(['like', 'tbl_company.fld_sec_reg_name', $this->companyDetails]);
+
+        return $dataProvider;
+    }
+
 }

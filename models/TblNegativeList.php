@@ -68,6 +68,7 @@ class TblNegativeList extends \yii\db\ActiveRecord
             'fld_source_office' => 'Source Office',
             'fld_source_specialist' => 'Source Specialist',
             'addRemarks' => 'Additional Remarks',
+            'status.fld_status_desc'=>'Infraction Type'
         ];
     }
 
@@ -88,7 +89,7 @@ class TblNegativeList extends \yii\db\ActiveRecord
                 }else{
                     $this->fld_remarks .= '<b>'.date('d F Y').': </b>'.$this->addRemarks.'<br>';
                 }
-                $this->fld_remarks .= '<b>Cleared by: </b>' . Yii::$app->user->identity->name;
+                $this->fld_remarks .= '<b>Cleared by: </b>' . Yii::$app->user->identity->name .'<br>';
 
             }else{
                 if($this->addRemarks != "")

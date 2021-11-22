@@ -115,11 +115,11 @@ class ApiController extends ActiveController
                 $model = new \app\models\TblNegativeList;
                 $model->fld_sec_reg_no_fk = $data['sec_reg_no'];
                 $model->fld_status_code_fk = $fld_status_code_fk;
-                $model->fld_remarks = '<b>'.date('d F Y').': </b>'. $data['remarks'] .'<br>';;
+                $model->fld_remarks = $data['remarks'] .'<br>';
                 $model->fld_cleared = 0;
                 $model->fld_neg_date  = date('Y-m-d');
-                $model->fld_date_cleared = '';
-                $model->fld_source_office = '|'.$office_id.'|';
+                $model->fld_date_cleared = date('Y-m-d H:i:s');
+                $model->fld_source_office = $office_id;
                 $model->fld_source_specialist = '|'.$empid.'|';
                 $model->save(false);
 
