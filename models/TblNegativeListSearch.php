@@ -171,7 +171,7 @@ class TblNegativeListSearch extends TblNegativeList
             ->andFilterWhere(['like', 'fld_status_code_fk', $this->fld_status_code_fk])
             ->andFilterWhere(['like', 'fld_remarks', $this->fld_remarks])
             // ->andFilterWhere(['like', 'fld_source_office', $this->fld_source_office])
-            ->andFilterWhere(['like', 'fld_source_specialist', Yii::$app->user->identity->empid])
+            ->andFilterWhere(['like', 'fld_source_specialist', '|'.Yii::$app->user->identity->empid.'|',false])
             ->andFilterWhere(['like', 'tbl_company.fld_sec_reg_name', $this->companyDetails]);
 
         return $dataProvider;
