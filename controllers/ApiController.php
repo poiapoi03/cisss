@@ -158,7 +158,7 @@ class ApiController extends ActiveController
     public function checkCompany($post)
     {
         $model = \app\models\Company::findOne(['fld_sec_reg_no'=>$post['sec_reg_no']]);
-        if($model == null)
+        if($model != null)
         {
             return true;
         }else{
