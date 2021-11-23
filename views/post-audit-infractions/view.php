@@ -16,7 +16,11 @@ use yii\widgets\DetailView;
             'fld_remarks:html',
             'fld_cleared',
             'fld_neg_date',
-            'fld_date_cleared',
+            [
+                'attribute'=>'fld_date_cleared',
+                'label'=>'Date Cleared',
+                'value'=>$model->fld_cleared ? $model->fld_date_cleared : '',
+            ],
             'fld_source_office:ntext',
             'fld_source_specialist:ntext',
         ],
