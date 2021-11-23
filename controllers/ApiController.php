@@ -33,6 +33,7 @@ class ApiController extends ActiveController
                 'actions' => [
                     'insert-company' => ['post'],
                     'add-infraction' => ['post'],
+                    'check-company' => ['post'],
                 ],
             ],
             'authenticator' => [
@@ -125,6 +126,43 @@ class ApiController extends ActiveController
 
         }catch (ErrorException $e){
             $this->returnError($e->getMessage()); 
+        }
+    }
+
+    public function actionCheckCompany()
+    {
+        try{
+            if(!$this->checkRole())
+            {
+                $this->returnError('INVALID USER'); 
+            }
+        
+            $request = Yii::$app->request;
+            $post = $request->bodyParams;
+
+            $data = $post['sec_reg_no'];
+            
+            if($data=="")
+            {
+                $this->returnError('INVALID DATA'); 
+            }else{
+                ini_set('memory_limit', '256M');
+                return $this->checkCompany($post);
+            }
+
+        }catch (ErrorException $e){
+            $this->returnError($e->getMessage()); 
+        }
+    }
+
+    public function checkCompany($post)
+    {
+        $model = \app\models\Company::findOne(['fld_sec_reg_no'=>$post['sec_reg_no']]);
+        if($model == null)
+        {
+            return true;
+        }else{
+            return false;
         }
     }
 

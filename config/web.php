@@ -54,6 +54,7 @@ $config = [
            'request/*',
            'api/insert-company',
            'api/add-infraction',
+           'api/check-company',
             //'some-controller/some-action',
             // The actions listed here will be allowed to everyone including guests.
             // So, 'admin/*' should not appear here in the production, of course.
@@ -146,6 +147,7 @@ $config = [
 					'extraPatterns'=>[
                         'POST insert-company' => 'insert-company',
                         'POST add-infraction' => 'add-infraction',
+                        'POST check-company' => 'check-company',
                         ]
 				],
             ],
