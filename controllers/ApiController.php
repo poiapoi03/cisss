@@ -84,20 +84,22 @@ class ApiController extends ActiveController
     private function addInfraction($data)
     {
         try{
-                $fld_status_code_fk = 1;
-                switch($data['post_review_status_id'])
-                {
-                    case 7: //For Compliance - Amendment
-                            $fld_status_code_fk = 131;
-                            break;
-                    case 8: //For Compliance - Petition
-                            $fld_status_code_fk = 132;
-                            break;
-                    case 10: //For Compliance - Other
-                            $fld_status_code_fk = 133;
-                            break;
+                $fld_status_code_fk = 134;
+                if(isset($data['post_review_status_id'])){
+                    switch($data['post_review_status_id'])
+                    {
+                        case 7: //For Compliance - Amendment
+                                $fld_status_code_fk = 131;
+                                break;
+                        case 8: //For Compliance - Petition
+                                $fld_status_code_fk = 132;
+                                break;
+                        case 10: //For Compliance - Other
+                                $fld_status_code_fk = 133;
+                                break;
+                    }
                 }
-                $empid = 900001; 
+                $empid = ''; 
                 switch($data['office'])
                 {
                     case 1: $empid = "001"; $office_id = "0103010200"; break; //main office - crmd - cprd
@@ -117,7 +119,7 @@ class ApiController extends ActiveController
                 $model->fld_status_code_fk = $fld_status_code_fk;
                 $model->fld_remarks = $data['remarks'] .'<br>';
                 $model->fld_cleared = 0;
-                $model->fld_neg_date  = date('Y-m-d');
+                $model->fld_neg_date  = date('Y-m-d H:i:s');
                 $model->fld_date_cleared = date('Y-m-d');
                 $model->fld_source_office = $office_id;
                 $model->fld_source_specialist = '|'.$empid.'|';
@@ -172,6 +174,15 @@ class ApiController extends ActiveController
                 $model->fld_emp_id = '';
                 $model->fld_entity_code_fk = 'REGISTERED';
                 $model->save(false);
+
+                if(isset($data['onesec']))
+                {
+                    if($data['onesec'] == 1)
+                    {
+                        $data['remarks'] = 'For Post Audit';
+                        $this->addInfraction($data);
+                    }
+                }
 
             }
 
