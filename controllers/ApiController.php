@@ -104,8 +104,8 @@ class ApiController extends ActiveController
                                 {
                                     Yii::$app->db_cisurdb->createCommand('UPDATE tbl_negative_list SET fld_cleared = 1, fld_date_cleared = "'.date('Y-m-d H:i:s').'", fld_remarks = "<br><b>'.date('d F Y').': </b> Post Audit Completed - '.$data['remarks'].'" WHERE fld_neg_id = '. $model->fld_neg_id)->query();
                                 }
-                                break;
                                 return true;
+                                break;
                     }
                 }
                 $empid = ''; 
@@ -193,7 +193,7 @@ class ApiController extends ActiveController
                 {
                     if($data['onesec'] == 1)
                     {
-                        $model = \app\models\TblNegativeList::findOne(['fld_sec_reg_no_fk'=>$data['sec_reg_no']]);
+                        $model = \app\models\TblNegativeList::findOne(['fld_sec_reg_no_fk'=>$data['sec_reg_no'],'fld_status_code_fk'=>134,'fld_cleared'=>0]);
                         if($model == null)
                         {
                             $data['remarks'] = 'For Post Audit';
