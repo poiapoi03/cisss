@@ -114,7 +114,12 @@ class ApiController extends ActiveController
                     case 10: $empid = "006"; $office_id = "0103110000"; break; //eo bacolod    
                 }
                 
-                $model = new \app\models\TblNegativeList;
+                if($fld_status_code_fk == 134)
+                {
+                    $model = new \app\models\TblNegativeList;    
+                }else{
+                    $model = \app\models\TblNegativeList::findOne(['fld_sec_reg_no_fk'=>$data['sec_reg_no'],'fld_status_code_fk'=>134]);
+                }
                 $model->fld_sec_reg_no_fk = $data['sec_reg_no'];
                 $model->fld_status_code_fk = $fld_status_code_fk;
                 $model->fld_remarks = $data['remarks'] .'<br>';
