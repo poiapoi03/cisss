@@ -193,7 +193,7 @@ class ApiController extends ActiveController
                 {
                     if($data['onesec'] == 1)
                     {
-                        $model = \app\models\TblNegativeList::findOne(['fld_sec_reg_no_fk'=>$data['sec_reg_no'],'fld_status_code_fk'=>134,'fld_cleared'=>0]);
+                        $model = \app\models\TblNegativeList::findOne(['fld_sec_reg_no_fk'=>$data['sec_reg_no']]);
                         if($model == null)
                         {
                             $data['remarks'] = 'For Post Audit';
