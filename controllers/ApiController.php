@@ -102,7 +102,7 @@ class ApiController extends ActiveController
                                 $model = \app\models\TblNegativeList::findOne(['fld_sec_reg_no_fk'=>$data['sec_reg_no'],'fld_status_code_fk'=>134]);
                                 if($model != null)
                                 {
-                                    Yii::$app->db_cisurdb->createCommand('UPDATE tbl_negative_list SET fld_cleared = 1, fld_date_cleared = "'.date('Y-m-d H:i:s').'", fld_remarks = "<br><b>'.date('d F Y').': </b> Post Audit Completed - '.$data['remarks'].'" WHERE fld_neg_id = '. $model->fld_neg_id)->query();
+                                    Yii::$app->db_cisurdb->createCommand('UPDATE tbl_negative_list SET fld_cleared = 1, fld_date_cleared = "'.date('Y-m-d H:i:s').'", fld_remarks = "'.$model->fld_remarks.'<br><b>'.date('d F Y').': </b> Post Audit Completed - '.$data['remarks'].'" WHERE fld_neg_id = '. $model->fld_neg_id)->query();
                                 }
                                 return true;
                                 break;
