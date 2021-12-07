@@ -125,13 +125,15 @@ class ApiController extends ActiveController
                 
                 if($fld_status_code_fk == 134)
                 {
-                    $model = new \app\models\TblNegativeList;    
+                    $model = new \app\models\TblNegativeList;   
+                    $model->fld_remarks = $data['remarks'] .'<br>'; 
                 }else{
                     $model = \app\models\TblNegativeList::findOne(['fld_sec_reg_no_fk'=>$data['sec_reg_no'],'fld_status_code_fk'=>134]);
+                    $model->fld_remarks =  '<b>'.date('d F Y').': </b>'.$data['remarks'] .'<br>';
                 }
                 $model->fld_sec_reg_no_fk = $data['sec_reg_no'];
                 $model->fld_status_code_fk = $fld_status_code_fk;
-                $model->fld_remarks = $data['remarks'] .'<br>';
+         
                 $model->fld_cleared = 0;
                 $model->fld_neg_date  = date('Y-m-d H:i:s');
                 $model->fld_date_cleared = date('Y-m-d');

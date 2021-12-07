@@ -21,8 +21,8 @@ use yii\widgets\DetailView;
                 'label'=>'Date Cleared',
                 'value'=>$model->fld_cleared ? $model->fld_date_cleared : '',
             ],
-            'fld_source_office:ntext',
-            'fld_source_specialist:ntext',
+            // 'fld_source_office:ntext',
+            // 'fld_source_specialist:ntext',
         ],
     ]) ?>
 
