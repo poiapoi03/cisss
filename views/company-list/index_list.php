@@ -16,8 +16,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
 CrudAsset::register($this);
 
-$assignment = \app\models\Assignment::find()->where(['user_id'=>\Yii::$app->user->id,'type'=>1])->all();
-$assignment_range = \app\models\Assignment::find()->where(['user_id'=>\Yii::$app->user->id,'type'=>2])->all();
+$assignment = \app\models\Assignment::find()->where(['user_id'=>\Yii::$app->user->id,'type'=>1,'status_id'=>1])->all();
+$assignment_range = \app\models\Assignment::find()->where(['user_id'=>\Yii::$app->user->id,'type'=>2,'status_id'=>1])->all();
 
 $tab_items = array();
 
